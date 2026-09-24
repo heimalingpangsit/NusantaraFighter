@@ -1,0 +1,39 @@
+Nusantara Fighter - Build Fix
+
+Fixed the Kotlin compilation errors reported by GitHub Actions on 2026-09-23.
+- Added exhaustive FighterId branches in Fighter.kt headwear rendering.
+- Added functional Skill 1, Skill 2, and Ultimate branches for all 11 fighters.
+- Existing GitHub Actions workflow remains configured for Gradle 8.9 + JDK 17.
+
+Build command:
+gradle assembleDebug --stacktrace
+
+---
+
+Gameplay/visual pass (2026-09-24)
+- Fixed root cause of fighters rendering inside the ULT/S1/S2 button row:
+  ground level (GROUND_Y) and the control dock now occupy separate, non-
+  overlapping regions of the 320x180 world (see GROUND_Y in Fighter.kt and
+  dockTop in GameView.kt).
+- Rebuilt the bottom HUD as a single dedicated control dock with a solid
+  panel background, plus a new PAUSE button (opens a Resume / Back to Lobby
+  overlay).
+- True edge-to-edge immersive fullscreen in MainActivity.kt via
+  WindowCompat/WindowInsetsControllerCompat (hides status + nav bars, stays
+  hidden after a swipe reveal).
+- Removed ABAH (had no sprite assets and no working kit) from FighterId,
+  CharacterData.kt, and every skill/color branch in GameView.kt.
+- Stripped solid-black canvas backgrounds off every character sprite frame
+  in assets/characters (FUFU, MR_ETANOL, MR_YOUTUBE, PURBANKYA, RAJA_SOLO)
+  via border-flood-fill + thin frame-line cleanup; verified transparent on
+  a checkerboard for every state.
+- Fighters now always turn to face their opponent (Fighter.faceToward),
+  fixing the "facing the wrong way" stiffness.
+- Added attack telegraphing: a forward lunge, motion-line/flash VFX during
+  the active frames of every attack, and skills/ultimate now put the
+  fighter into its attack pose (beginAttackPose) instead of playing no
+  animation at all.
+- Added a small hit-VFX system (afterAction in GameView.kt): particle
+  bursts, floating damage/heal numbers, screen shake, brief hit-stop on
+  skill/ultimate hits, and a screen flash on ultimates.
+- Idle breathing bob and jump squash/stretch for less static-looking poses.
