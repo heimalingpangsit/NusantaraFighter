@@ -469,7 +469,7 @@ class GameView(context: Context) : View(context) {
         val rr = 4f
         paint.isAntiAlias = true
 
-        paint.color = 0x88000000
+        paint.color = 0x88000000.toInt()
         c.drawRoundRect(RectF(left, top + 1.5f, right, top + 11.5f), rr, rr, paint)
         paint.color = 0xFF14171C.toInt()
         c.drawRoundRect(RectF(left, top, right, top + 10f), rr, rr, paint)
